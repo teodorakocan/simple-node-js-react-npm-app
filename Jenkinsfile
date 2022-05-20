@@ -4,14 +4,14 @@ node {
     }
 
     stage('Build Docker Image') {
-        bat 'docker build -t teodorakocan/demo:v1 .'
+        sh 'docker build -t teodorakocan/demo:v1 .'
     }
 
     stage('Push Docker Image Into Docker Hub') {
         withCredentials([string(credentialsId: 'Docker_Password', variable: 'Docker_Password')]) 
         {
-            bat "docker login -u teodorakocan -p ${Docker_Password}"
+            sh "docker login -u teodorakocan -p ${Docker_Password}"
         }
-        bat 'docker push teodorakocan/demo:v1'
+        sh 'docker push teodorakocan/demo:v1'
     }
 }
