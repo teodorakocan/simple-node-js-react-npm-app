@@ -1,33 +1,29 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:lts-buster-slim'
-            args '-p 3000:3000'
-        }
-    }
+    agent  any 
+
     environment {
         CI = 'true'
     }
+
     stages {
-        stage('Build') {
+        stage('Git Hub Checkout') {
             steps {
-                sh 'npm install'
+                git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'
             }
         }
 
-        stage('Test') {
+        stage('Build Docker Image') {
             steps {
-                sh "chmod +x -R ${env.WORKSPACE}"
-                sh './jenkins/scripts/test.sh'
+                bat 'docker build -t teodorakocan/demo:v1 .'
             }
         }
 
-        stage('Deliver') {
+        stage('Push Docker Image Into Docker Hub') {
             steps {
-                sh "chmod +x -R ${env.WORKSPACE}"
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                withCredentials([string(credentialsId: 'Docker_Password', variable: 'Docker_Password')]){
+                    bat "docker login -u teodorakocan -p ${Docker_Password}"
+                }
+                bat 'docker push teodorakocan/demo:v1'
             }
         }
     }
