@@ -1,8 +1,4 @@
 node {
-    stage('Build') { 
-        sh 'npm install'
-    }
-    
     stage('Git Hub Checkout') {
         git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
     }
