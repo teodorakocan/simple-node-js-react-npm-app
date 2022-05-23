@@ -5,8 +5,6 @@ pipeline {
         NEW_VERSION = "sh export GIT_SHA=\$(git rev-parse HEAD)"
     }
 
-    checkout scm
-
     stages{
         stage('Git Hub Checkout') {
             steps{
