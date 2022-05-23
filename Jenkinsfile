@@ -11,9 +11,9 @@ node {
         steps{
             withCredentials([string(credentialsId: 'Docker_Password', variable: 'Docker_Password')]) 
             {
-                sh "docker login -u teodorakocan -p ${Docker_Password}"
+                bat "docker login -u teodorakocan -p ${Docker_Password}"
             }
-            sh 'docker push teodorakocan/demo:v1'
+            bat 'docker push teodorakocan/demo:v1'
         }
     }
 }
