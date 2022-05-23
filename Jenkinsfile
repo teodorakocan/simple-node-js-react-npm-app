@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment{
+        NEW_VERSION = "sh export GIT_SHA=$(git rev-parse HEAD)"
+    }
+
     stages{
         stage('Git Hub Checkout') {
             steps{
@@ -10,7 +14,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps{
-                sh 'docker build -t teodorakocan/demo:v1 .'
+                sh "docker build -t teodorakocan/demo:latest -t teodorakocan/demo:${NEW_VERSION} ."
             }
         }
 
@@ -20,7 +24,8 @@ pipeline {
                 {
                     sh "docker login -u teodorakocan -p ${Docker_Password}"
                 }
-                sh 'docker push teodorakocan/demo:v1'
+                sh 'docker push teodorakocan/demo:latest'
+                sh "docker push teodorakocan/demo:${NEW_VERSION}"
             }
         }
     }
