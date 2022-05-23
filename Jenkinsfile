@@ -8,15 +8,14 @@ pipeline {
     stages{
         stage('Git Hub Checkout') {
             steps{
-                echo "${NEW_VERSION}"
-                sh 'npm git install'
+                echo "${GIT_SHA}"
                 git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
             }
         }
 
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:latest -t teodorakocan/demo:${NEW_VERSION} ."
+                sh "docker build -t teodorakocan/demo:latest -t teodorakocan/demo:${GIT_SHA} ."
             }
         }
 
@@ -27,7 +26,7 @@ pipeline {
                     sh "docker login -u teodorakocan -p ${Docker_Password}"
                 }
                 sh 'docker push teodorakocan/demo:latest'
-                sh "docker push teodorakocan/demo:${NEW_VERSION}"
+                sh "docker push teodorakocan/demo:${GIT_SHA}"
             }
         }
     }
