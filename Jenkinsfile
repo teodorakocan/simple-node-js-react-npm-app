@@ -4,7 +4,7 @@ pipeline {
     tools {nodejs "node"}
 
     environment{
-        NEW_VERSION = "${sh(returnStdout: true, script: 'export GIT_SHA=\$(git rev-parse HEAD)')}"
+        NEW_VERSION = "${sh(returnStdout: true, script: 'export GIT_SHA=$(git rev-parse HEAD)')}"
     }
 
     stages{
