@@ -1,9 +1,14 @@
 pipeline {
     agent any
+    tools {nodejs "node"}
 
     stages{
+        stage('Git Hub Checkout') {
+            steps{
+                git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
+            }
+        }
         
-
         stage('Build Docker Image') {
             steps{
                 sh "docker build -t teodorakocan/demo:${env.BUILD_NUMBER} ."
@@ -17,6 +22,12 @@ pipeline {
                     sh "docker login -u teodorakocan -p ${Docker_Password}"
                 }
                 sh "docker push teodorakocan/demo:${env.BUILD_NUMBER}"
+            }
+        }
+
+        stage('Pull Image from Docker Hub') {
+            steps{
+                sh "docker pull teodorakocan/demo:last"
             }
         }
     }
