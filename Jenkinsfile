@@ -4,13 +4,14 @@ pipeline {
     tools {nodejs "node"}
 
     environment{
-        NEW_VERSION = sh "export git rev-parse HEAD"
+        NEW_VERSION = ''
     }
 
     stages{
         stage('Git Hub Checkout') {
             steps{
                 sh 'npm install git'
+                NEW_VERSION = sh "export git rev-parse HEAD"
                 echo "${NEW_VERSION}"
                 git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
             }
