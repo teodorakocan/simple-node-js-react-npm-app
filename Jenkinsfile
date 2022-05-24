@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:latest -t teodorakocan/demo:${env.BUILD_NUMBER} ."
+                sh "docker build -t teodorakocan/demo:latest -t teodorakocan/demo:version${env.CHANGE_ID} ."
             }
         }
 
@@ -20,7 +20,7 @@ pipeline {
                 {
                     sh "docker login -u teodorakocan -p ${Docker_Password}"
                 }
-                sh "docker push teodorakocan/demo:${env.BUILD_NUMBER}"
+                sh "docker push teodorakocan/demo:version${env.CHANGE_ID}"
             }
         }
     }
