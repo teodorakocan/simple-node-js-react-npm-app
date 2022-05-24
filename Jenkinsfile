@@ -1,6 +1,8 @@
 pipeline {
     agent any
 
+    tools {nodejs "node"}
+    
     environment{
         NEW_VERSION = "sh export GIT_SHA=\$(git rev-parse HEAD)"
     }
