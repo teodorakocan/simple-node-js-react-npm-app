@@ -26,7 +26,7 @@ pipeline {
 
         stage('Pull Image from Docker Hub') {
             steps{
-                sh "docker pull teodorakocan/demo:last"
+                sh "docker pull teodorakocan/demo:${env.BUILD_NUMBER}"
             }
         }
     }
