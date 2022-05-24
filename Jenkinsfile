@@ -2,23 +2,23 @@ pipeline {
     agent any
 
     tools {nodejs "node"}
-    
+
     environment{
-        NEW_VERSION = "sh export GIT_SHA=\$(git rev-parse HEAD)"
+        NEW_VERSION = "sh git rev-parse HEAD"
     }
 
     stages{
         stage('Git Hub Checkout') {
             steps{
                 sh 'npm install git'
-                echo "${GIT_SHA}"
+                echo "${NEW_VERSION}"
                 git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
             }
         }
 
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:latest -t teodorakocan/demo:${GIT_SHA} ."
+                sh "docker build -t teodorakocan/demo:latest -t teodorakocan/demo:${NEW_VERSION} ."
             }
         }
 
@@ -29,7 +29,7 @@ pipeline {
                     sh "docker login -u teodorakocan -p ${Docker_Password}"
                 }
                 sh 'docker push teodorakocan/demo:latest'
-                sh "docker push teodorakocan/demo:${GIT_SHA}"
+                sh "docker push teodorakocan/demo:${NEW_VERSION}"
             }
         }
     }
