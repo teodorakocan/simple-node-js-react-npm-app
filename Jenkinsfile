@@ -11,7 +11,7 @@ pipeline {
         stage('Git Hub Checkout') {
             steps{
                 sh 'npm install git'
-                echo "envirnment${NEW_VERSION}"
+                echo "envirnment${env.NEW_VERSION}"
                 git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
             }
         }
