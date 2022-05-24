@@ -3,10 +3,6 @@ pipeline {
 
     tools {nodejs "node"}
 
-    environment{
-        NEW_VERSION = "${sh(returnStdout: true, script: 'export $(git rev-parse HEAD)')}"
-    }
-
     stages{
         stage('Git Hub Checkout') {
             steps{
@@ -18,7 +14,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:${env.BILD} ."
+                sh "docker build -t teodorakocan/demo:${env.BUILD_NUMBER} ."
             }
         }
 
@@ -28,7 +24,7 @@ pipeline {
                 {
                     sh "docker login -u teodorakocan -p ${Docker_Password}"
                 }
-                sh "docker push teodorakocan/demo:${NEW_VERSION}"
+                sh "docker push teodorakocan/demo:${env.BUILD_NUMBER}"
             }
         }
     }
