@@ -11,14 +11,14 @@ pipeline {
         stage('Git Hub Checkout') {
             steps{
                 sh 'npm install git'
-                echo "envirnment${env.NEW_VERSION}"
+                echo "envirnment ${env.BUILD_NUMBER}"
                 git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
             }
         }
 
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:${NEW_VERSION} ."
+                sh "docker build -t teodorakocan/demo:${env.BILD} ."
             }
         }
 
