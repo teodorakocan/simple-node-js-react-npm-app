@@ -30,7 +30,6 @@ pipeline {
                 sh "docker push teodorakocan/demo:${NEW_VERSION}"
             }
         }
-
         stage('Pull Image from Docker Hub') {
             steps{
                 sh "docker pull teodorakocan/demo:${NEW_VERSION}"
