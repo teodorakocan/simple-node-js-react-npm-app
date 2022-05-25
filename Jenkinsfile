@@ -17,7 +17,7 @@ pipeline {
         
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:${NEW_VERSION} . /var/jenkins_home/workspace/DemoPipeline@2@tmp/durable-89ebcda3/script.sh: 1:"
+                sh "docker build -t teodorakocan/demo:${NEW_VERSION} ."
             }
         }
 
@@ -35,11 +35,8 @@ pipeline {
             agent {
                 docker {
                     image "teodorakocan/demo:${NEW_VERSION}"
-                    args  '-v /tmp:/tmp'
+                    args  '-v 3000:3000'
                 }
-            }
-            steps{
-                sh "docker pull teodorakocan/demo:${NEW_VERSION}"
             }
         }
     }
