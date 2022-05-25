@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment{
-        GIT_COMMIT_SHORT = sh(
+        NEW_VERSION = sh(
                 script: "printf \$(git rev-parse ${GIT_COMMIT})",
                 returnStdout: true
         )
@@ -11,14 +11,13 @@ pipeline {
     stages{
         stage('Git Hub Checkout') {
             steps{
-                echo "${GIT_COMMIT_SHORT}"
                 git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
             }
         }
         
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:${env.BUILD_NUMBER} ."
+                sh "docker build -t teodorakocan/demo:${NEW_VERSION} ."
             }
         }
 
@@ -28,13 +27,13 @@ pipeline {
                 {
                     sh "docker login -u teodorakocan -p ${Docker_Password}"
                 }
-                sh "docker push teodorakocan/demo:${env.BUILD_NUMBER}"
+                sh "docker push teodorakocan/demo:${NEW_VERSION}"
             }
         }
 
         stage('Pull Image from Docker Hub') {
             steps{
-                sh "docker pull teodorakocan/demo:${env.BUILD_NUMBER}"
+                sh "docker pull teodorakocan/demo:${NEW_VERSION}"
             }
         }
     }
