@@ -9,6 +9,9 @@ pipeline {
     }
 
     stages{
+        stage('Build'){
+            echo " ${PATH}"
+        }
         stage('Build Docker Image') {
             steps{
                 sh "docker build -t teodorakocan/demo:${NEW_VERSION} ."
@@ -24,7 +27,7 @@ pipeline {
                 sh "docker push teodorakocan/demo:${NEW_VERSION}"
             }
         }
-        
+
         stage('Pull Image from Docker Hub') {
             steps{
                 sh "docker pull teodorakocan/demo:${NEW_VERSION}"
