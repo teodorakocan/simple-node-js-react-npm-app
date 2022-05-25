@@ -9,6 +9,12 @@ pipeline {
     }
 
     stages{
+        stage('Git Hub Checkout') {
+            steps{
+                git branch: 'master', credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'
+                
+            }
+        }
 
         stage('Build Docker Image') {
             steps{
@@ -25,7 +31,7 @@ pipeline {
                 sh "docker push teodorakocan/demo:${NEW_VERSION}"
             }
         }
-
+        
         stage('Pull Image from Docker Hub') {
             steps{
                 sh "docker pull teodorakocan/demo:${NEW_VERSION}"
