@@ -34,9 +34,8 @@ pipeline {
         stage('Pull Image from Docker Hub') {
             agent {
                 docker {
-                    image 'node:16-alpine3.14'
-                    label 'my-defined-label'
-                    args  '-v /tmp:/tmp'
+                    image "teodorakocan/demo:${NEW_VERSION}"
+                    args  '-v 3000:/3000'
                 }
             }
             steps{
