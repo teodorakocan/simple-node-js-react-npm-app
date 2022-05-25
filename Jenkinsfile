@@ -3,7 +3,7 @@ pipeline {
 
     environment{
         GIT_COMMIT_SHORT = sh(
-                script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
+                script: "printf \$(git rev-parse ${GIT_COMMIT})",
                 returnStdout: true
         )
     }
