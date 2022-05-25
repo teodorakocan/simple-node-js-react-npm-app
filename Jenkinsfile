@@ -20,7 +20,6 @@ pipeline {
                 sh "docker build -t teodorakocan/demo:${NEW_VERSION} ."
             }
         }
-
         stage('Push Docker Image Into Docker Hub') {
             steps{
                 withCredentials([string(credentialsId: 'Docker_Password', variable: 'Docker_Password')]) 
