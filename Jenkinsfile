@@ -12,7 +12,6 @@ pipeline {
         stage('Git Hub Checkout') {
             steps{
                 git branch: 'master', credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'
-                
             }
         }
 
