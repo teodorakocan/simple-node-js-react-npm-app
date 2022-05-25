@@ -32,11 +32,8 @@ pipeline {
         }
 
         stage('Pull Image from Docker Hub') {
-            agent {
-                docker {
-                    image "teodorakocan/demo:${NEW_VERSION}"
-                    args  '-v 3000:3000'
-                }
+            steps{
+                sh "docker pull teodorakocan/demo:${NEW_VERSION}"
             }
         }
     }
