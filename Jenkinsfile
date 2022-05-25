@@ -14,7 +14,6 @@ pipeline {
                 git credentialsId: 'GitHubCredentials', url: 'https://github.com/teodorakocan/simple-node-js-react-npm-app.git'  
             }
         }
-        
         stage('Build Docker Image') {
             steps{
                 sh "docker build -t teodorakocan/demo:${NEW_VERSION} ."
