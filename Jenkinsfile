@@ -17,7 +17,7 @@ pipeline {
         
         stage('Build Docker Image') {
             steps{
-                sh "docker build -t teodorakocan/demo:${NEW_VERSION} ."
+                sh "docker build -t teodorakocan/demo:${NEW_VERSION} . /var/jenkins_home/workspace/DemoPipeline@2@tmp/durable-89ebcda3/script.sh: 1:"
             }
         }
 
