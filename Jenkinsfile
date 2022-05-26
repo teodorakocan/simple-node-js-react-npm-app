@@ -7,12 +7,11 @@ pipeline {
                 returnStdout: true
         )
     }
-
     stages{
         stage('Checkout'){
             checkout scm
         }
-        
+
         stage('Build Docker Image') {
             steps{
                 sh ('docker build -t teodorakocan/demo:$NEW_VERSION .')
