@@ -14,7 +14,6 @@ pipeline {
                 sh ('docker build -t teodorakocan/demo:$NEW_VERSION .')
             }
         }
-        
         stage('Push Docker Image Into Docker Hub') {
             steps{
                 withCredentials([string(credentialsId: 'Docker_Password', variable: 'Docker_Password')]) 
@@ -24,7 +23,6 @@ pipeline {
                 sh ('docker push teodorakocan/demo:$NEW_VERSION')
             }
         }
-
         stage('Pull Image from Docker Hub') {
             steps{
                 sh ('docker pull teodorakocan/demo:$NEW_VERSION')
