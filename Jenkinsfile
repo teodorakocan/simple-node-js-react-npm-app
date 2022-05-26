@@ -7,6 +7,7 @@ pipeline {
                 returnStdout: true
         )
     }
+    
     stages{
         stage('Checkout'){
             steps{
